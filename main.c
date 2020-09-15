@@ -1,3 +1,5 @@
+#include "help.h"
+
 int main(){
 char op;
 do{

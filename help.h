@@ -25,5 +25,4 @@ void cadastra_cliente();
 
 void imprime_cliente(cliente c);
 
-int valida_cpf(char cpf, char ccpf);
-
+void atualiza_cliente();

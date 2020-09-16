@@ -61,6 +61,7 @@ return (op);
 }
 
 char busca_cliente(char *cpf){
+
 hos = fopen("hospede.dat", "rb");
 cliente c;
 if (hos == NULL) {
@@ -85,6 +86,12 @@ else
     };
     fclose(hos);
 }
+system("cls");
+printf("\n// ----- // ----- //// ----- // ----- // \n");
+printf("\n\nCadastro existente não encontrado\n\n");
+printf("\n// ----- // ----- //// ----- // ----- // \n");
+system("pause");
+system("cls");
 return NULL;
 }
 //arrumar
@@ -93,30 +100,76 @@ system("cls");
 printf("// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n");
 cliente c;
 char cpf[14];
-int val=0;
-hos = fopen("hospede.dat", "ab");
+hos = fopen("hospede.dat", "ab+");
+fflush(stdin);
+printf("Digite o CPF: ");
+gets(cpf);
+fseek(hos, 0, SEEK_SET);
+fflush(stdin);
 if (hos == NULL) {
     puts("Nao foi possivel abrir o arquivo!\n");
     exit(1);
-    }
-    else
+}
+else
     {
-        printf("Digite o CPF: ");
-        scanf("%s", c.cpf);
-        fflush(stdin);
-        printf("Nome: ");
-        gets(c.nome);
-        printf("Sobrenome: ");
-        gets(c.sobrenome);
-        printf("Telefone: ");
-        gets(c.telefone);
-        printf("Sexo: ");
-        scanf("%c", &c.sexo);
-        printf("Idade:");
-        scanf("%d", &c.idade);
-        c.ativo=1;
-        fwrite(&c,sizeof (cliente),1, hos);
-        fclose(hos);
+        while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0)
+        {
+        }
+            if(strcmp(cpf, c.cpf)==0)
+        {
+            system("cls");
+            printf("\n// ----- // ----- //// ----- // ----- // \n");
+            printf("\n\nCadastro existente encontrado\n\n");
+            printf("\n// ----- // ----- //// ----- // ----- // \n");
+            system("pause");
+            system("cls");
+            return 0;
+        }
+            else
+            while(fread(&c, sizeof(cliente), 1, hos)==1 && c.cpf!=NULL)
+            {
+            }
+            if(!feof(hos))
+            {
+                fseek(hos, -sizeof(cliente), SEEK_CUR);
+                fflush(stdin);
+                printf("\nDigite o Nome: ");
+                gets(c.nome);
+                printf("Digite o Sobrenome: ");
+                gets(c.sobrenome);
+                printf("Digite o Telefone: ");
+                gets(c.telefone);
+                printf("Digite o Sexo: ");
+                scanf("%c", &c.sexo);
+                printf("Digite a Idade:");
+                scanf("%d", &c.idade);
+                c.ativo=1;
+                strcpy(c.cpf, cpf);
+                fwrite(&c,sizeof (cliente),1, hos);
+                fclose(hos);
+            }
+            else
+            {
+                fseek(hos, 1, SEEK_CUR);
+                fflush(stdin);
+                printf("Nome: ");
+                gets(c.nome);
+                printf("Sobrenome: ");
+                gets(c.sobrenome);
+                printf("Telefone: ");
+                gets(c.telefone);
+                printf("Sexo: ");
+                scanf("%c", &c.sexo);
+                printf("Idade:");
+                scanf("%d", &c.idade);
+                c.ativo=1;
+                strcpy(c.cpf, cpf);
+                fwrite(&c,sizeof (cliente),1, hos);
+                fclose(hos);
+                system("cls");
+            }
+            fclose(hos);
+            return 0;
     }
 system("cls");
 }

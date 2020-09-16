@@ -28,7 +28,7 @@ do{
     break;
 
     case '4':
-        printf("\nChamar funcao remove...\n\n");
+        remove_cliente();
 
     break;
 
@@ -94,7 +94,7 @@ system("pause");
 system("cls");
 return NULL;
 }
-//arrumar
+
 void cadastra_cliente(){
 system("cls");
 printf("// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n");
@@ -126,7 +126,7 @@ else
             return 0;
         }
             else
-            while(fread(&c, sizeof(cliente), 1, hos)==1 && c.cpf!=NULL)
+            while(fread(&c, sizeof(cliente), 1, hos)==1 && c.ativo!=NULL)
             {
             }
             if(!feof(hos))
@@ -173,7 +173,6 @@ else
     }
 system("cls");
 }
-
 
 void atualiza_cliente(){
 hos = fopen("hospede.dat", "rb+");
@@ -262,6 +261,84 @@ else
     system("cls");
 }
 
+void remove_cliente(){
+hos = fopen("hospede.dat", "rb+");
+fseek(hos, 0, SEEK_SET);
+cliente c;
+system("cls");
+char cpf[14], op;
+int val=0;
+fflush(stdin);
+printf("// ----- // ----- // Remove Hospede // ----- // ----- // \n\n");
+printf("\nDigite o CPF do cadastro que será Removido: ");
+gets(cpf);
+if (hos == NULL) {
+    puts("Nao foi possivel abrir o arquivo!\n");
+    exit(1);
+}
+else
+    {
+        while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0)
+        {
+        }
+            if(strcmp(cpf, c.cpf)==0)
+        {
+            system("cls");
+            printf("\nOs dados desse cliente são:\n");
+            fread(&c, sizeof(cliente), 0, hos);
+            printf("\n// ----- // ----- //// ----- // ----- // \n");
+            printf("\nCPF: %s \n", c.cpf);
+            printf("Nome: %s \n", c.nome);
+            printf("Sobrenome: %s \n", c.sobrenome);
+            printf("Telefone: %s \n", c.telefone);
+            printf("Sexo: %c \n", c.sexo);
+            printf("Idade: %d ", c.idade);
+            printf("\n\n// ----- // ----- //// ----- // ----- // \n");
+            system("pause");
+            system("cls");
+
+            printf("\n// ----- // ----- //// ----- // ----- // \n");
+            printf("\nOs dados serão Deletados...\n\n");
+            printf("\nDeseja continuar?\n \n--> SIM (s)<--\n\n\n--> Não (n) <--\n\n");
+            ("\n// ----- // ----- //// ----- // ----- // \n");
+            fflush(stdin);
+            scanf ("%c", &op);
+
+            switch (op)
+            {
+            case 's':
+                fseek(hos, -sizeof(cliente), SEEK_CUR);
+                fflush(stdin);
+                system("cls");
+                c.ativo=0;
+                printf("\n// ----- // ----- //// ----- // ----- // \n\n");
+                printf("Cliente deletado");
+                printf("\n\n// ----- // ----- //// ----- // ----- // \n\n");
+                fwrite(&c ,sizeof (cliente),1, hos);
+                fclose(hos);
+                system("pause");
+                system("cls");
+                break;
+
+            case 'n':
+                system("cls");
+                printf("\n// ----- // ----- //// ----- // ----- // \n");
+                printf("\nOperação cancelada\n");
+                printf("\n// ----- // ----- //// ----- // ----- // \n\n");
+                system("pause");
+                system("cls");
+                break;
+
+                default:
+                    printf("\nEntrada desconhecida\n");
+                    system("pause");
+                    system("cls");
+                    break;
+            }
+        }
+    }
+    system("cls");
+}
 
 void imprime_cliente(cliente c){
 system("cls");
@@ -275,13 +352,18 @@ else
     printf("\n// ----- // ----- // LISTA DE CADASTROS // ----- // ----- // \n");
     while(fread(&c, sizeof(cliente), 1, hos)==1)
     {
-        printf("\nCPF: %s \n", c.cpf);
-        printf("Nome: %s \n", c.nome);
-        printf("Sobrenome: %s \n", c.sobrenome);
-        printf("Telefone: %s \n", c.telefone);
-        printf("Sexo: %c \n", c.sexo);
-        printf("Idade: %d ", c.idade);
-        printf("\n// ----- // ----- //// ----- // ----- // \n");
+        if(c.ativo!=0)
+        {
+            printf("\nCPF: %s \n", c.cpf);
+            printf("Nome: %s \n", c.nome);
+            printf("Sobrenome: %s \n", c.sobrenome);
+            printf("Telefone: %s \n", c.telefone);
+            printf("Sexo: %c \n", c.sexo);
+            printf("Idade: %d ", c.idade);
+
+            printf("\n// ----- // ----- //// ----- // ----- // \n");
+        }
+
     }
     fclose(hos);
 }

@@ -114,15 +114,15 @@ if (hos == NULL) {
         scanf("%c", &c.sexo);
         printf("Idade:");
         scanf("%d", &c.idade);
+        c.ativo=1;
         fwrite(&c,sizeof (cliente),1, hos);
         fclose(hos);
     }
 system("cls");
 }
 
-//arrumar
-void atualiza_cliente()
-{
+
+void atualiza_cliente(){
 hos = fopen("hospede.dat", "rb+");
 fseek(hos, 0, SEEK_SET);
 cliente c;
@@ -139,8 +139,9 @@ if (hos == NULL) {
 }
 else
     {
-        while(fread(&c, sizeof(cliente), 1, hos)==1)
+        while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0)
         {
+        }
             if(strcmp(cpf, c.cpf)==0)
         {
             system("cls");
@@ -169,7 +170,7 @@ else
             {
             case 's':
 
-                fseek(hos, -1, SEEK_CUR);
+                fseek(hos, -sizeof(cliente), SEEK_CUR);
                 fflush(stdin);
                 system("cls");
                 printf("\n// ----- // ----- //// ----- // ----- // \n\n");
@@ -204,7 +205,6 @@ else
                     break;
             }
         }
-        }
     }
     system("cls");
 }
@@ -235,3 +235,4 @@ else
 system("pause");
 system("cls");
 }
+

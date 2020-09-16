@@ -137,7 +137,7 @@ hos = fopen("hospede.dat", "r+");
 cliente c;
 system("cls");
 char cpf[14], op;
-int val;
+int val=0;
 fflush(stdin);
 printf("// ----- // ----- // Atualiza Hospede // ----- // ----- // \n\n");
 printf("\nDigite o CPF do cadastro que será atualizado: ");
@@ -150,8 +150,9 @@ else
     {
         while(fread(&c, sizeof(cliente), 1, hos)==1)
         {
+            val++;
             if(strcmp(cpf, c.cpf)==0)
-                val=1;
+                val=val;
             else
                 val=NULL;
 
@@ -186,7 +187,7 @@ else
             case 's':
                 fflush(stdin);
                 system("cls");
-                //fseek(hos, (c.cpf), sizeof(cliente),SEEK_SET);
+                fseek(hos, (val) * sizeof(cliente),SEEK_SET);
                 printf("\n// ----- // ----- //// ----- // ----- // \n\n");
                 printf("Novo Nome: ");
                 gets(c.nome);
@@ -198,7 +199,7 @@ else
                 scanf("%c", &c.sexo);
                 printf("Nova Idade:");
                 scanf("%d", &c.idade);
-                fwrite(&c,sizeof (cliente),1, hos);
+                fwrite(&c ,sizeof (cliente),1, hos);
                 fclose(hos);
                 break;
 

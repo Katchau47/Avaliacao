@@ -14,15 +14,19 @@ typedef struct  {
    int idade;
    char cpf[14];
    int ativo;
-} cliente ;
+}cliente ;
 
 FILE *hos;
 
-char menu ();
+int menu ();
 
 char busca_cliente(char *cpf);
 
 void cadastra_cliente();
+
+void atualiza_cliente();
+
+void remove_cliente();
 
 void imprime_cliente(cliente c);
 

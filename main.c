@@ -3,7 +3,7 @@
 int main(){
     setlocale(LC_ALL,"PORTUGUESE");
 
-    char opc;
+    int opc;
     char cpf[14];
 
     cliente c;
@@ -12,7 +12,7 @@ int main(){
     
     do{
         switch (opc){
-            case '1':
+            case 1:
                 system("cls");
                 fflush(stdin);
                 printf("// ----- // ----- // BUSCA HÓSPEDE // ----- // ----- // \n\n");
@@ -21,29 +21,29 @@ int main(){
                 busca_cliente(&cpf);
             break;
 
-            case '2':
+            case 2:
                 cadastra_cliente ();
             break;
 
-            case '3':
+            case 3:
                 atualiza_cliente();
 
             break;
 
-            case '4':
+            case 4:
                 remove_cliente();
 
             break;
 
-            case '5':
+            case 5:
                 imprime_cliente(c);
             break;
 
-            case '6':
+            case 6:
                 printf("\nChamar funcao relatório...\n\n");
             break;
 
-            case '9':
+            case 9:
             break;
 
             default:
@@ -53,16 +53,16 @@ int main(){
 
         opc=menu();
 
-    } while (opc!='9');
+    } while (opc != 9);
 
     return 0;
 }
 
 
-char menu (){
-    char op;
+int menu (){
+    int op;
     printf("\n\n// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n[1] - Buscar por cadastro \n[2] - Cadastrar novo\n[3] - Atualizar cadastro\n[4] - Remover cadastro\n[5] - Imprimir todos cadastrados\n[6] - Gerar relatório\n[9] - Finalizar \n-------------------------------\nEntre com a sua opção: ");
-    scanf("\n%c",&op);
+    scanf("\n%d",&op);
     return (op);
 }
 
@@ -134,6 +134,7 @@ void cadastra_cliente(){
                 else
                 while(fread(&c, sizeof(cliente), 1, hos)==1 && c.ativo!=NULL)
                 {
+                    
                 }
                 if(!feof(hos))
                 {

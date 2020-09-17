@@ -16,7 +16,10 @@ typedef struct  {
    int ativo;
 }cliente ;
 
+//arquivo para hospedes
 FILE *hos;
+//arquivo para relatorio
+FILE *rel;
 
 int menu ();
 
@@ -33,3 +36,5 @@ void imprime_cliente(cliente c);
 void atualiza_cliente();
 
 void remove_cliente();
+
+void gerar_relatorio(cliente c);

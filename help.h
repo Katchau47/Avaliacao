@@ -7,13 +7,14 @@
 #define NULL 0
 
 typedef struct  {
-char nome[25];
-char sobrenome[25];
-char telefone [15];
-char sexo;
-int idade;
-char cpf[14];
-}cliente ;
+   char nome[25];
+   char sobrenome[25];
+   char telefone [15];
+   char sexo;
+   int idade;
+   char cpf[14];
+   int ativo;
+} cliente ;
 
 FILE *hos;
 
@@ -26,3 +27,5 @@ void cadastra_cliente();
 void imprime_cliente(cliente c);
 
 void atualiza_cliente();
+
+void remove_cliente();

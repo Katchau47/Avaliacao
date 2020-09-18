@@ -1,4 +1,5 @@
 #include "help.h";
+#include "validation.h"
 
 int main() {
 	setlocale(LC_ALL,"PORTUGUESE");
@@ -18,38 +19,51 @@ int main() {
 				printf("// ----- // ----- // BUSCA HÓSPEDE // ----- // ----- // \n\n");
 				printf("\nDigite o CPF: ");
 				gets(cpf);
-				busca_cliente(&cpf);
-				break;
+				if(busca_cliente(&cpf) != NULL){
+					system("cls");
+					printf("\n// ----- // ----- //// ----- // ----- // \n");
+					printf("\n\nCadastro encontrado \n\n");
+					printf("\n\nCPF: %s \n\n", cpf);
+					printf("\n// ----- // ----- //// ----- // ----- // \n");
+					system("pause");
+					system("cls");	
+				}else{
+					system("cls");
+					printf("\n// ----- // ----- //// ----- // ----- // \n");
+					printf("\n\nCadastro não encontrado\n\n");
+					printf("\n// ----- // ----- //// ----- // ----- // \n");
+					system("pause");
+					system("cls");
+				}
+			break;
 
 			case 2:
 				cadastra_cliente ();
-				break;
+			break;
 
 			case 3:
 				atualiza_cliente();
-
-				break;
+			break;
 
 			case 4:
 				remove_cliente();
-
-				break;
+			break;
 
 			case 5:
 				imprime_cliente(c);
-				break;
+			break;
 
 			case 6:
-				gerar_relatorio(c);
-				
-				break;
+				gerar_relatorio(c);	
+			break;
 
 			case 9:
-				break;
+				exit(1);
+			break;
 
 			default:
 				printf("\nOpção Inválida!\n\n");
-				break;
+			break;
 		}
 
 		opc=menu();
@@ -64,25 +78,20 @@ int menu () {
 	int op;
 	printf("\n\n// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n[1] - Buscar por cadastro \n[2] - Cadastrar novo\n[3] - Atualizar cadastro\n[4] - Remover cadastro\n[5] - Imprimir todos cadastrados\n[6] - Gerar relatório\n[9] - Finalizar \n-------------------------------\nEntre com a sua opção: ");
 	scanf("\n%d",&op);
-	return (op);
+	return op;
 }
 
 char busca_cliente(char *cpf) {
 
 	hos = fopen("hospede.dat", "rb");
 	cliente c;
+	
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
 	} else {
 		while(fread(&c, sizeof(cliente), 1, hos)==1) {
 			if(strcmp(cpf, c.cpf)==0) {
-				system("cls");
-				printf("\n// ----- // ----- //// ----- // ----- // \n");
-				printf("\n\nCadastro existente encontrado\n\n");
-				printf("\n// ----- // ----- //// ----- // ----- // \n");
-				system("pause");
-				system("cls");
 				return c.cpf;
 			}else{
 				return NULL;
@@ -91,44 +100,42 @@ char busca_cliente(char *cpf) {
 		};
 		fclose(hos);
 	}
-	system("cls");
-	printf("\n// ----- // ----- //// ----- // ----- // \n");
-	printf("\n\nCadastro existente não encontrado\n\n");
-	printf("\n// ----- // ----- //// ----- // ----- // \n");
-	system("pause");
-	system("cls");
 	return NULL;
 }
 
 void cadastra_cliente() {
 	system("cls");
 	printf("// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n");
+	
 	cliente c;
 	char cpf[14];
+	
 	hos = fopen("hospede.dat", "ab+");
+	
 	fflush(stdin);
+	
 	printf("Digite o CPF: ");
 	gets(cpf);
+
 	fseek(hos, 0, SEEK_SET);
 	fflush(stdin);
+	
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
 	} else {
-		while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0) {
-		}
+		while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0) {}
 		if(strcmp(cpf, c.cpf)==0) {
 			system("cls");
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
-			printf("\n\nCadastro existente encontrado\n\n");
+			printf("\n\n Não foi possivel realizar o cadastro");
+			printf("\n Motivo: essa CPF já possui cadastro \n\n");
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
 			system("pause");
 			system("cls");
 			return 0;
 		} else
-			while(fread(&c, sizeof(cliente), 1, hos)==1 && c.ativo!=NULL) {
-
-			}
+			while(fread(&c, sizeof(cliente), 1, hos)==1 && c.ativo!=NULL) {}
 		if(!feof(hos)) {
 			fseek(hos, -sizeof(cliente), SEEK_CUR);
 			fflush(stdin);
@@ -172,16 +179,20 @@ void cadastra_cliente() {
 }
 
 void atualiza_cliente() {
-	hos = fopen("hospede.dat", "rb+");
+	
 	fseek(hos, 0, SEEK_SET);
+	
+	hos = fopen("hospede.dat", "rb+");
 	cliente c;
-	system("cls");
 	char cpf[14], op;
 	int val=0;
+	
 	fflush(stdin);
+	system("cls");
 	printf("// ----- // ----- // Atualiza Hospede // ----- // ----- // \n\n");
 	printf("\nDigite o CPF do cadastro que seá atualizado: ");
 	gets(cpf);
+	
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -193,12 +204,7 @@ void atualiza_cliente() {
 			printf("\nOs dados desse cliente sÃ£o:\n");
 			fread(&c, sizeof(cliente), 0, hos);
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
-			printf("\nCPF: %s \n", c.cpf);
-			printf("Nome: %s \n", c.nome);
-			printf("Sobrenome: %s \n", c.sobrenome);
-			printf("Telefone: %s \n", c.telefone);
-			printf("Sexo: %c \n", c.sexo);
-			printf("Idade: %d ", c.idade);
+			printf("\nCPF: %s \nNome: %s \nSobrenome: %s\nTelefone: %s \nSexo: %c \nIdade: %d ", c.cpf, c.nome, c.sobrenome, c.telefone, c.sexo, c.idade);
 			printf("\n\n// ----- // ----- //// ----- // ----- // \n");
 			system("pause");
 			system("cls");
@@ -231,7 +237,7 @@ void atualiza_cliente() {
 					fwrite(&c ,sizeof (cliente),1, hos);
 					fclose(hos);
 					system("cls");
-					break;
+				break;
 
 				case 'n':
 					system("cls");
@@ -240,13 +246,13 @@ void atualiza_cliente() {
 					printf("\n// ----- // ----- //// ----- // ----- // \n\n");
 					system("pause");
 					system("cls");
-					break;
+				break;
 
 				default:
 					printf("\nEntrada desconhecida\n");
 					system("pause");
 					system("cls");
-					break;
+				break;
 			}
 		}
 	}
@@ -254,25 +260,28 @@ void atualiza_cliente() {
 }
 
 void remove_cliente() {
-	hos = fopen("hospede.dat", "rb+");
-	fseek(hos, 0, SEEK_SET);
-	cliente c;
 	system("cls");
+	
+	hos = fopen("hospede.dat", "rb+");
+	cliente c;
 	char cpf[14], op;
 	int val=0;
+	
+	fseek(hos, 0, SEEK_SET);
 	fflush(stdin);
+	
 	printf("// ----- // ----- // Remove Hospede // ----- // ----- // \n\n");
 	printf("\nDigite o CPF do cadastro que será Removido: ");
 	gets(cpf);
+	
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
 	} else {
-		while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0) {
-		}
+		while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0) {}
 		if(strcmp(cpf, c.cpf)==0) {
 			system("cls");
-			printf("\nOs dados desse cliente sÃ£o:\n");
+			printf("\nOs dados desse cliente serão:\n");
 			fread(&c, sizeof(cliente), 0, hos);
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
 			printf("\nCPF: %s \n", c.cpf);
@@ -305,7 +314,7 @@ void remove_cliente() {
 					fclose(hos);
 					system("pause");
 					system("cls");
-					break;
+				break;
 
 				case 'n':
 					system("cls");
@@ -314,13 +323,13 @@ void remove_cliente() {
 					printf("\n// ----- // ----- //// ----- // ----- // \n\n");
 					system("pause");
 					system("cls");
-					break;
+				break;
 
 				default:
 					printf("\nEntrada desconhecida\n");
 					system("pause");
 					system("cls");
-					break;
+				break;
 			}
 		}
 	}
@@ -329,7 +338,9 @@ void remove_cliente() {
 
 void imprime_cliente(cliente c) {
 	system("cls");
+	
 	hos = fopen("hospede.dat", "rb");
+	
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -346,7 +357,6 @@ void imprime_cliente(cliente c) {
 
 				printf("\n// ----- // ----- //// ----- // ----- // \n");
 			}
-
 		}
 		fclose(hos);
 	}
@@ -356,7 +366,7 @@ void imprime_cliente(cliente c) {
 
 void gerar_relatorio(cliente c){
 	system("cls");
-	
+		
 	hos = fopen("hospede.dat", "rb");
 	rel = fopen("relatorio.txt", "w");
 	
@@ -368,18 +378,12 @@ void gerar_relatorio(cliente c){
 		printf("\n Gerando Relatório...\n\n");
 	
 		while(fread(&c, sizeof(cliente), 1, hos)==1) {
+			printf(" .\n");
 			if(c.ativo!=0) {
-				fprintf(rel, "%s", c.cpf);
-				fprintf(rel, "%s", c.nome);
-				fprintf(rel, "%s", c.sobrenome);
-				fprintf(rel, "%s", c.telefone);
-				fprintf(rel, "%c", c.sexo);
-				fprintf(rel, "%d", c.idade);
-
-				printf("\n// ----- // ----- Relatório GERADO COM SUCESSO ----- // ----- // \n");
+				fprintf(rel, "%s%s%s%s%s%s%s%s%s%c%s%d%s", "{ CPF: " , c.cpf, ", Nome: ", c.nome, ", Sobrenome: ", c.sobrenome, ", Telefone: ", c.telefone, ", Sexo: ", c.sexo, ", Idade: ", c.idade, " }, " );	
 			}
-
 		}
+		printf("\n Relatório GERADO COM SUCESSO \n\n");
 	}else{
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);

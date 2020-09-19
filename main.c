@@ -1,5 +1,4 @@
-#include "help.h";
-#include "validation.h"
+#include "help.h"
 
 int main() {
 	setlocale(LC_ALL,"PORTUGUESE");
@@ -16,7 +15,7 @@ int main() {
 			case 1:
 				system("cls");
 				fflush(stdin);
-				printf("// ----- // ----- // BUSCA HÓSPEDE // ----- // ----- // \n\n");
+				printf("// ----- // ----- // BUSCA HÃ“SPEDE // ----- // ----- // \n\n");
 				printf("\nDigite o CPF: ");
 				gets(cpf);
 				if(busca_cliente(&cpf) != NULL){
@@ -30,7 +29,7 @@ int main() {
 				}else{
 					system("cls");
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
-					printf("\n\nCadastro não encontrado\n\n");
+					printf("\n\nCadastro nÃ£o encontrado\n\n");
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
 					system("pause");
 					system("cls");
@@ -62,7 +61,7 @@ int main() {
 			break;
 
 			default:
-				printf("\nOpção Inválida!\n\n");
+				printf("\nOpÃ§Ã£o InvÃ¡lida!\n\n");
 			break;
 		}
 
@@ -76,7 +75,7 @@ int main() {
 
 int menu () {
 	int op;
-	printf("\n\n// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n[1] - Buscar por cadastro \n[2] - Cadastrar novo\n[3] - Atualizar cadastro\n[4] - Remover cadastro\n[5] - Imprimir todos cadastrados\n[6] - Gerar relatório\n[9] - Finalizar \n-------------------------------\nEntre com a sua opção: ");
+	printf("\n\n// ----- // ----- // CADASTRO HÃ“SPEDE // ----- // ----- // \n\n[1] - Buscar por cadastro \n[2] - Cadastrar novo\n[3] - Atualizar cadastro\n[4] - Remover cadastro\n[5] - Imprimir todos cadastrados\n[6] - Gerar relatÃ³rio\n[9] - Finalizar \n-------------------------------\nEntre com a sua opÃ§Ã£o: ");
 	scanf("\n%d",&op);
 	return op;
 }
@@ -105,7 +104,7 @@ char busca_cliente(char *cpf) {
 
 void cadastra_cliente() {
 	system("cls");
-	printf("// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n");
+	printf("// ----- // ----- // CADASTRO HÃ“SPEDE // ----- // ----- // \n\n");
 	
 	cliente c;
 	char cpf[14];
@@ -128,8 +127,8 @@ void cadastra_cliente() {
 		if(strcmp(cpf, c.cpf)==0) {
 			system("cls");
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
-			printf("\n\n Não foi possivel realizar o cadastro");
-			printf("\n Motivo: essa CPF já possui cadastro \n\n");
+			printf("\n\n NÃ£o foi possivel realizar o cadastro");
+			printf("\n Motivo: essa CPF jÃ¡ possui cadastro \n\n");
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
 			system("pause");
 			system("cls");
@@ -190,7 +189,7 @@ void atualiza_cliente() {
 	fflush(stdin);
 	system("cls");
 	printf("// ----- // ----- // Atualiza Hospede // ----- // ----- // \n\n");
-	printf("\nDigite o CPF do cadastro que seá atualizado: ");
+	printf("\nDigite o CPF do cadastro que seÃ¡ atualizado: ");
 	gets(cpf);
 	
 	if (hos == NULL) {
@@ -201,7 +200,7 @@ void atualiza_cliente() {
 		}
 		if(strcmp(cpf, c.cpf)==0) {
 			system("cls");
-			printf("\nOs dados desse cliente sÃ£o:\n");
+			printf("\nOs dados desse cliente sÃƒÂ£o:\n");
 			fread(&c, sizeof(cliente), 0, hos);
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
 			printf("\nCPF: %s \nNome: %s \nSobrenome: %s\nTelefone: %s \nSexo: %c \nIdade: %d ", c.cpf, c.nome, c.sobrenome, c.telefone, c.sexo, c.idade);
@@ -210,8 +209,8 @@ void atualiza_cliente() {
 			system("cls");
 
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
-			printf("\nOs dados serão atualizados...\n\n");
-			printf("\nDeseja continuar?\n \n--> SIM (s)<--\n\n\n--> Não (n) <--\n\n");
+			printf("\nOs dados serÃ£o atualizados...\n\n");
+			printf("\nDeseja continuar?\n \n--> SIM (s)<--\n\n\n--> NÃ£o (n) <--\n\n");
 			("\n// ----- // ----- //// ----- // ----- // \n");
 			fflush(stdin);
 			scanf ("%c", &op);
@@ -242,7 +241,7 @@ void atualiza_cliente() {
 				case 'n':
 					system("cls");
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
-					printf("\nOperação cancelada\n");
+					printf("\nOperaÃ§Ã£o cancelada\n");
 					printf("\n// ----- // ----- //// ----- // ----- // \n\n");
 					system("pause");
 					system("cls");
@@ -271,7 +270,7 @@ void remove_cliente() {
 	fflush(stdin);
 	
 	printf("// ----- // ----- // Remove Hospede // ----- // ----- // \n\n");
-	printf("\nDigite o CPF do cadastro que será Removido: ");
+	printf("\nDigite o CPF do cadastro que serÃ¡ Removido: ");
 	gets(cpf);
 	
 	if (hos == NULL) {
@@ -281,7 +280,7 @@ void remove_cliente() {
 		while(fread(&c, sizeof(cliente), 1, hos)==1 && strcmp(cpf, c.cpf)!=0) {}
 		if(strcmp(cpf, c.cpf)==0) {
 			system("cls");
-			printf("\nOs dados desse cliente serão:\n");
+			printf("\nOs dados desse cliente serÃ£o:\n");
 			fread(&c, sizeof(cliente), 0, hos);
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
 			printf("\nCPF: %s \n", c.cpf);
@@ -295,8 +294,8 @@ void remove_cliente() {
 			system("cls");
 
 			printf("\n// ----- // ----- //// ----- // ----- // \n");
-			printf("\nOs dados serão Deletados...\n\n");
-			printf("\nDeseja continuar?\n \n--> SIM (s)<--\n\n\n--> NÃ£o (n) <--\n\n");
+			printf("\nOs dados serÃ£o Deletados...\n\n");
+			printf("\nDeseja continuar?\n \n--> SIM (s)<--\n\n\n--> NÃƒÂ£o (n) <--\n\n");
 			("\n// ----- // ----- //// ----- // ----- // \n");
 			fflush(stdin);
 			scanf ("%c", &op);
@@ -319,7 +318,7 @@ void remove_cliente() {
 				case 'n':
 					system("cls");
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
-					printf("\nOperação cancelada\n");
+					printf("\nOperaÃ§Ã£o cancelada\n");
 					printf("\n// ----- // ----- //// ----- // ----- // \n\n");
 					system("pause");
 					system("cls");
@@ -375,7 +374,7 @@ void gerar_relatorio(cliente c){
 		exit(1);
 	} else if(rel != NULL) {
 		printf("\n// ----- // ----- //// ----- // ----- // \n");
-		printf("\n Gerando Relatório...\n\n");
+		printf("\n Gerando RelatÃ³rio...\n\n");
 	
 		while(fread(&c, sizeof(cliente), 1, hos)==1) {
 			printf(" .\n");
@@ -383,7 +382,7 @@ void gerar_relatorio(cliente c){
 				fprintf(rel, "%s%s%s%s%s%s%s%s%s%c%s%d%s", "{ CPF: " , c.cpf, ", Nome: ", c.nome, ", Sobrenome: ", c.sobrenome, ", Telefone: ", c.telefone, ", Sexo: ", c.sexo, ", Idade: ", c.idade, " }, " );	
 			}
 		}
-		printf("\n Relatório GERADO COM SUCESSO \n\n");
+		printf("\n RelatÃ³rio GERADO COM SUCESSO \n\n");
 	}else{
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);

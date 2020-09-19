@@ -33,8 +33,4 @@ void remove_cliente();
 
 void imprime_cliente(cliente c);
 
-void atualiza_cliente();
-
-void remove_cliente();
-
 void gerar_relatorio(cliente c);

@@ -4,7 +4,7 @@ int main() {
 	setlocale(LC_ALL,"PORTUGUESE");
 
 	int opc;
-	char cpf[14];
+	char cpf[14], co[14];
 
 	cliente c;
 
@@ -25,7 +25,7 @@ int main() {
 					printf("\n\nCPF: %s \n\n", cpf);
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
 					system("pause");
-					system("cls");	
+					system("cls");
 				}else{
 					system("cls");
 					printf("\n// ----- // ----- //// ----- // ----- // \n");
@@ -34,6 +34,7 @@ int main() {
 					system("pause");
 					system("cls");
 				}
+			break;
 			break;
 
 			case 2:
@@ -53,7 +54,7 @@ int main() {
 			break;
 
 			case 6:
-				gerar_relatorio(c);	
+				gerar_relatorio(c);
 			break;
 
 			case 9:
@@ -80,45 +81,44 @@ int menu () {
 	return op;
 }
 
-char busca_cliente(char *cpf) {
+char * busca_cliente(char *cpf) {
 
 	hos = fopen("hospede.dat", "rb");
 	cliente c;
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
 	} else {
 		while(fread(&c, sizeof(cliente), 1, hos)==1) {
-			if(strcmp(cpf, c.cpf)==0) {
-				return c.cpf;
-			}else{
-				return NULL;
-			}
-			system("cls");
-		};
-		fclose(hos);
-	}
-	return NULL;
+			if(strcmp(cpf, c.cpf)==0)
+        {
+            return cpf;
+        }
+        system("cls");
+    };
+    fclose(hos);
+}
+return NULL;
 }
 
 void cadastra_cliente() {
 	system("cls");
 	printf("// ----- // ----- // CADASTRO HÓSPEDE // ----- // ----- // \n\n");
-	
+
 	cliente c;
 	char cpf[14];
-	
+
 	hos = fopen("hospede.dat", "ab+");
-	
+
 	fflush(stdin);
-	
+
 	printf("Digite o CPF: ");
 	gets(cpf);
 
 	fseek(hos, 0, SEEK_SET);
 	fflush(stdin);
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -178,20 +178,20 @@ void cadastra_cliente() {
 }
 
 void atualiza_cliente() {
-	
+
 	fseek(hos, 0, SEEK_SET);
-	
+
 	hos = fopen("hospede.dat", "rb+");
 	cliente c;
 	char cpf[14], op;
 	int val=0;
-	
+
 	fflush(stdin);
 	system("cls");
 	printf("// ----- // ----- // Atualiza Hospede // ----- // ----- // \n\n");
 	printf("\nDigite o CPF do cadastro que seá atualizado: ");
 	gets(cpf);
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -260,19 +260,19 @@ void atualiza_cliente() {
 
 void remove_cliente() {
 	system("cls");
-	
+
 	hos = fopen("hospede.dat", "rb+");
 	cliente c;
 	char cpf[14], op;
 	int val=0;
-	
+
 	fseek(hos, 0, SEEK_SET);
 	fflush(stdin);
-	
+
 	printf("// ----- // ----- // Remove Hospede // ----- // ----- // \n\n");
 	printf("\nDigite o CPF do cadastro que será Removido: ");
 	gets(cpf);
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -337,9 +337,9 @@ void remove_cliente() {
 
 void imprime_cliente(cliente c) {
 	system("cls");
-	
+
 	hos = fopen("hospede.dat", "rb");
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
@@ -365,21 +365,21 @@ void imprime_cliente(cliente c) {
 
 void gerar_relatorio(cliente c){
 	system("cls");
-		
+
 	hos = fopen("hospede.dat", "rb");
 	rel = fopen("relatorio.txt", "w");
-	
+
 	if (hos == NULL) {
 		puts("Nao foi possivel abrir o arquivo!\n");
 		exit(1);
 	} else if(rel != NULL) {
 		printf("\n// ----- // ----- //// ----- // ----- // \n");
 		printf("\n Gerando Relatório...\n\n");
-	
+
 		while(fread(&c, sizeof(cliente), 1, hos)==1) {
 			printf(" .\n");
 			if(c.ativo!=0) {
-				fprintf(rel, "%s%s%s%s%s%s%s%s%s%c%s%d%s", "{ CPF: " , c.cpf, ", Nome: ", c.nome, ", Sobrenome: ", c.sobrenome, ", Telefone: ", c.telefone, ", Sexo: ", c.sexo, ", Idade: ", c.idade, " }, " );	
+				fprintf(rel, "%s%s%s%s%s%s%s%s%s%c%s%d%s", "{ CPF: " , c.cpf, ", Nome: ", c.nome, ", Sobrenome: ", c.sobrenome, ", Telefone: ", c.telefone, ", Sexo: ", c.sexo, ", Idade: ", c.idade, " }, " );
 			}
 		}
 		printf("\n Relatório GERADO COM SUCESSO \n\n");
@@ -389,9 +389,8 @@ void gerar_relatorio(cliente c){
 	}
 	fclose(hos);
 	fclose(rel);
-	
+
 	system("pause");
 	system("cls");
-	
-}
 
+}

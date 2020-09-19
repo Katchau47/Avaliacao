@@ -23,7 +23,7 @@ FILE *rel;
 
 int menu ();
 
-char busca_cliente(char *cpf);
+char * busca_cliente(char *cpf);
 
 void cadastra_cliente();
 
@@ -38,4 +38,3 @@ void atualiza_cliente();
 void remove_cliente();
 
 void gerar_relatorio(cliente c);
-

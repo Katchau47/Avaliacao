@@ -25,11 +25,13 @@ int menu ();
 
 char * busca_cliente(char *cpf);
 
-void cadastra_cliente();
+void cadastra_cliente(char *cpf);
 
-void atualiza_cliente();
+void atualiza_cliente(char *cpf);
 
-void remove_cliente();
+void remove_cliente(char *cpf);
+
+//void imprime_cliente(char *cpf);
 
 void imprime_cliente(cliente c);
 

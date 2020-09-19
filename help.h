@@ -1,4 +1,4 @@
-//arquivo onde ser„o declaradas as bibliotecas e protÛtipos de funÁ„o
+//arquivo onde ser√£o declaradas as bibliotecas e prot√≥tipos de fun√ß√£o
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,4 +39,3 @@ void remove_cliente();
 
 void gerar_relatorio(cliente c);
 
-//void getData(cliente *c, FILE hos);

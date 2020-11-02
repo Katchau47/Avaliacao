@@ -6,9 +6,8 @@ int main() {
 	char cpf[14], co[14];
 	cliente c;
     printf("// ----- // ----- // Bem Vindo // ----- // ----- // \n\n\n");
-	printf("\nEste sistema foi desenvolvido pelos alunos:\n\n");
+	printf("\nEste sistema foi desenvolvido pelo aluno:\n\n");
 	printf("\n       MARCOS VINÍCIUS PEDROSO\n");
-	printf("\n                 &\n\n         NYCOLAS SILVA FRÓES\n\n\n\n");
 	system("pause");
 	system("cls");
     opc=menu();
